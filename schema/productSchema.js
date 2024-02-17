@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const validateRating = require("../utils/validateRating");
+const validateCategoryId = require("../utils/validateCategoryId");
 
 const productSchema = new mongoose.Schema({
   category_id: {
@@ -36,24 +38,6 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model("Product", productSchema);
-
-function validateCategoryId(v) {
-  if (!mongoose.Types.ObjectId.isValid(v)) {
-    throw new Error("Invalid category id.");
-  }
-
-  return v;
-}
-
-function validateRating(v) {
-  const numbersAfterDecimal = v.toString().split(".")[1];
-
-  if (numbersAfterDecimal && numbersAfterDecimal.length > 1) {
-    throw new Error("Rating should have only one digit after decimal");
-  }
-
-  return v;
-}
 
 function validatePostRequest(req) {
   const schema = Joi.object({

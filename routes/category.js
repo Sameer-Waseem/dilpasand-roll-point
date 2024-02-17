@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const categories = await Category.find();
     return res.status(200).send({ categories });
   } catch (error) {
-    return res.status(400).send({ error });
+    return res.status(400).send("Internal server error");
   }
 });
 
@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
 
     return res.status(200).send({ category });
   } catch (error) {
-    return res.status(400).send({ error });
+    return res.status(400).send("Internal server error");
   }
 });
 
@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 
     return res.status(200).send({ category });
   } catch (error) {
-    return res.status(400).send({ error });
+    return res.status(400).send("Internal server error");
   }
 });
 
