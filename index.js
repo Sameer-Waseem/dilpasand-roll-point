@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const { categoryRouter } = require("./routes/category");
-const { productRouter } = require("./routes/Product");
+const { productRouter } = require("./routes/product");
 
 mongoose
   .connect("mongodb://localhost/dipasand-roll-point")
@@ -10,6 +11,7 @@ mongoose
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
