@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().select("name");
     return res.status(200).send({ categories });
   } catch (error) {
     return res.status(400).send("Internal server error");

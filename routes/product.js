@@ -36,9 +36,22 @@ router.get("/", async (req, res) => {
     }
 
     const products = await Product.find(findObj)
+      .populate("category_id", "name")
       .sort(sortObj)
       .select("name price rating");
-    return res.status(200).send({ products });
+
+    const response = [
+      ...products.map((product) => ({
+        _id: product._id,
+        category_id: product.category_id._id,
+        name: product.name,
+        price: product.price,
+        rating: product.rating,
+        category: product.category_id.name,
+      })),
+    ];
+
+    return res.status(200).send({ products: response });
   } catch (error) {
     return res.status(400).send("Internal server error");
   }
