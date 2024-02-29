@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const { error } = validateGetRequest(req.body);
+    const { error } = validateGetRequest(req.query);
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
@@ -20,16 +20,16 @@ router.get("/", async (req, res) => {
     let findObj = {};
     let sortObj = {};
 
-    if (req.body.name) {
-      findObj["name"] = new RegExp(req.body.name, "i");
+    if (req.query.name) {
+      findObj["name"] = new RegExp(req.query.name, "i");
     }
 
-    if (req.body.category_id) {
-      findObj["category_id"] = req.body.category_id;
+    if (req.query.category_id) {
+      findObj["category_id"] = req.query.category_id;
     }
 
-    if (req.body.order_by) {
-      const { sortingName, sortingDirection } = getOrderBy(req.body.order_by);
+    if (req.query.order_by) {
+      const { sortingName, sortingDirection } = getOrderBy(req.query.order_by);
       sortObj = {
         [sortingName]: sortingDirection,
       };
